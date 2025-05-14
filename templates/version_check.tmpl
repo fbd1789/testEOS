@@ -1,0 +1,7 @@
+{{- if eq (compareVersions .result.version .vars.min_version) 0 -}}
+OK
+{{- else if eq (compareVersions .result.version .vars.min_version) 1 -}}
+OK
+{{- else -}}
+FAIL - Version is too old ({{ .result.version }})
+{{- end }}

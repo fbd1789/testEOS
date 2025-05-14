@@ -1,0 +1,18 @@
+{{- $bad := list -}}
+{{- $psus := index .result "powerSupplies" }}
+{{- range $psuId, $ps := $psus }}
+  {{- $sensors := index $ps "tempSensors" }}
+  {{- range $sensorId, $sensor := $sensors }}
+    {{- $status := index $sensor "status" }}
+    Sensor {{ $sensorId }} on PSU {{ $psuId }}: {{ $status }}
+    {{- if and $status (ne (print $status) "ok") }}
+      {{- $bad = append $bad (printf "%s (PSU %s)" $sensorId $psuId) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- if eq (len $bad) 0 }}
+OK
+{{- else }}
+FAIL - Temp sensors not OK: {{ range $i, $v := $bad }}{{ if $i }}, {{ end }}{{ $v }}{{ end }}
+{{- end }}

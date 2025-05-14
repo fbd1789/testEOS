@@ -1,0 +1,5 @@
+{{- if eq .result.state .vars.expected_state -}}
+OK
+{{- else -}}
+FAIL - MLAG is {{ .result.state }}
+{{- end }}

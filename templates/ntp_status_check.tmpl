@@ -1,0 +1,8 @@
+{{- $status := index .result "status" }}
+{{- $expected := index .vars "expected_status" }}
+NTP status: {{ $status }}
+{{- if eq (print $status) (print $expected) }}
+OK
+{{- else }}
+FAIL - Expected status '{{ $expected }}', got '{{ $status }}'
+{{- end }}

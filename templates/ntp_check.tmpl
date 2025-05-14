@@ -1,0 +1,31 @@
+{{- $declared := index .vars "ntp_servers" }}
+{{- $seen := index (index .result "clockSource") "ntpServer" }}
+
+{{- $actualList := list -}}
+{{- if (kindIs "string" $seen) }}
+  {{- $actualList = list $seen }}
+{{- else if (kindIs "slice" $seen) }}
+  {{- $actualList = $seen }}
+{{- end }}
+
+Configured NTP servers: {{ range $i, $v := $declared }}{{ if $i }}, {{ end }}{{ $v }}{{ end }}
+Seen NTP servers: {{ range $i, $v := $actualList }}{{ if $i }}, {{ end }}{{ $v }}{{ end }}
+
+{{- $missing := list -}}
+{{- range $i, $expected := $declared }}
+  {{- $found := false }}
+  {{- range $j, $actual := $actualList }}
+    {{- if eq (print $expected) (print $actual) }}
+      {{- $found = true }}
+    {{- end }}
+  {{- end }}
+  {{- if not $found }}
+    {{- $missing = append $missing $expected }}
+  {{- end }}
+{{- end }}
+
+{{- if eq (len $missing) 0 }}
+OK
+{{- else }}
+FAIL - Missing NTP server(s): {{ range $i, $v := $missing }}{{ if $i }}, {{ end }}{{ $v }}{{ end }}
+{{- end }}

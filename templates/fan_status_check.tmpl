@@ -1,0 +1,18 @@
+{{- $bad := list -}}
+{{- $psus := index .result "powerSupplies" }}
+{{- range $psuId, $ps := $psus }}
+  {{- $fans := index $ps "fans" }}
+  {{- range $fanId, $fan := $fans }}
+    {{- $status := index $fan "status" }}
+    Fan {{ $fanId }} on PSU {{ $psuId }}: {{ $status }}
+    {{- if and $status (ne (print $status) "ok") }}
+      {{- $bad = append $bad (printf "%s (PSU %s)" $fanId $psuId) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- if eq (len $bad) 0 }}
+OK
+{{- else }}
+FAIL - Fan(s) not OK: {{ range $i, $v := $bad }}{{ if $i }}, {{ end }}{{ $v }}{{ end }}
+{{- end }}

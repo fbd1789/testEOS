@@ -1,0 +1,20 @@
+{{- $bad := list -}}
+{{- $max := index .vars "max_speed" }}
+{{- $psus := index .result "powerSupplies" }}
+{{- range $psuId, $ps := $psus }}
+  {{- $fans := index $ps "fans" }}
+  {{- range $fanId, $fan := $fans }}
+    {{- $status := index $fan "status" }}
+    {{- $speed := index $fan "speed" }}
+    Fan {{ $fanId }} on PSU {{ $psuId }}: status={{ $status }}, speed={{ $speed }}
+    {{- if or (ne (print $status) "ok") (gt $speed $max) }}
+      {{- $bad = append $bad (printf "%s (PSU %s, speed=%v)" $fanId $psuId $speed) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- if eq (len $bad) 0 }}
+OK
+{{- else }}
+FAIL - Fan(s) above threshold: {{ range $i, $v := $bad }}{{ if $i }}, {{ end }}{{ $v }}{{ end }}
+{{- end }}

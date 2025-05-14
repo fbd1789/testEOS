@@ -1,0 +1,8 @@
+{{- $tz := index .result "timezone" }}
+{{- $expected := index .vars "timezone" }}
+Timezone: {{ $tz }}
+{{- if eq (print $tz) (print $expected) }}
+OK
+{{- else }}
+FAIL - Expected timezone '{{ $expected }}', got '{{ $tz }}'
+{{- end }}

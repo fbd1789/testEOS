@@ -1,0 +1,58 @@
+tests:
+  - name: Check EOS Version
+    command: "show version"
+    template: "version_check.tmpl"
+    vars:
+      min_version: "4.34.OM"
+  
+  - name: Check Image Optimization
+    command: "show version"
+    template: "image_optimization_check.tmpl"
+    vars:
+      allowed_values:
+        - "Strata-4GB"
+  
+  - name: Check MLAG State
+    command: "show mlag"
+    template: "mlag_state_check.tmpl"
+    vars:
+      expected_state: "enabled"
+
+  - name: Check Power Supply States
+    command: "show environment power"
+    template: "power_state_check.tmpl"
+
+  - name: Check Temp Sensors Status
+    command: "show environment power"
+    template: "tempsensor_check.tmpl"
+
+  - name: Check Fan Status
+    command: "show environment power"
+    template: "fan_status_check.tmpl"
+
+  - name: Check Fan Speed Limit
+    command: "show environment power"
+    template: "fan_speed_check.tmpl"
+    vars:
+      max_speed: 30.0
+
+  - name: Check Timezone
+    command: "show clock"
+    template: "timezone_check.tmpl"
+    vars:
+      timezone: "Europe/Paris"
+
+  - name: Check NTP Server
+    command: "show clock"
+    template: "ntp_check.tmpl"
+    vars:
+      ntp_servers:
+        - "129.250.35.250"
+        - "129.250.35.251"
+        - "ntp.example.com"
+
+  - name: Check NTP Sync Status
+    command: "show ntp status"
+    template: "ntp_status_check.tmpl"
+    vars:
+      expected_status: "synchronised"

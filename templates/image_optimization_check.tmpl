@@ -1,0 +1,13 @@
+{{- $val := .result.imageOptimization -}}
+{{- $ok := false -}}
+{{- range .vars.allowed_values -}}
+  {{- if eq $val . -}}
+    {{- $ok = true -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $ok -}}
+OK
+{{- else -}}
+FAIL - Unexpected imageOptimization value: {{ $val }}
+{{- end }}

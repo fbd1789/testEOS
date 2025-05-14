@@ -1,0 +1,15 @@
+{{- $bad := list -}}
+{{- $psus := index .result "powerSupplies" -}}
+{{- range $id, $ps := $psus }}
+  {{- $state := index $ps "state" }}
+  PSU {{ $id }}: {{ $state }}
+  {{- if and $state (ne (print $state) "ok") }}
+    {{- $bad = append $bad $id }}
+  {{- end }}
+{{- end }}
+
+{{- if eq (len $bad) 0 }}
+OK
+{{- else }}
+FAIL - Power supplies not OK: {{ range $i, $v := $bad }}{{ if $i }}, {{ end }}{{ $v }}{{ end }}
+{{- end }}

@@ -95,6 +95,22 @@ FAIL - status incorrect: {{ $state }}
 
 ---
 
+## ✅ Liste des tests
+| Nom du Test | Commande | Objectif | Paramètres |
+|-------------|----------|----------|------------|
+| Check EOS Version | `show version` | Vérifie que la version EOS est au minimum `4.34.OM` | `min_version: 4.34.OM` |
+| Check Image Optimization | `show version` | Vérifie que l’image est optimisée (ex. Strata-4GB) | `allowed_values: [Strata-4GB]` |
+| Check MLAG State | `show mlag` | Vérifie que le MLAG est activé | `expected_state: enabled` |
+| Check Power Supply States | `show environment power` | Vérifie l'état des alimentations électriques | – |
+| Check Temp Sensors Status | `show environment power` | Vérifie les capteurs de température | – |
+| Check Fan Status | `show environment power` | Vérifie l'état de fonctionnement des ventilateurs | – |
+| Check Fan Speed Limit | `show environment power` | Vérifie que la vitesse des ventilateurs est inférieure à un seuil | `max_speed: 30.0` |
+| Check Timezone | `show clock` | Vérifie que le fuseau horaire est correctement configuré | `timezone: Europe/Paris` |
+| Check NTP Server | `show clock` | Vérifie que les serveurs NTP configurés sont bien présents | `ntp_servers: [...]` |
+| Check NTP Sync Status | `show ntp status` | Vérifie que le switch est synchronisé avec le NTP | `expected_status: synchronised` |
+
+---
+
 ## 🔐 Connexion
 
 La connexion aux équipements EOS se fait via HTTPS (eAPI). Le fichier `api/client.go` gère :

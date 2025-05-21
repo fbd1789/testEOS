@@ -99,16 +99,5 @@ if psRaw, ok := raw["powerSupplies"].(map[interface{}]interface{}); ok {
     }
     raw["powerSupplies"] = fixed
 }
-// if psu, ok := raw["powerSupplies"].(map[string]interface{}); ok {
-//     fmt.Println("✅ powerSupplies is map[string]interface{} with keys:")
-//     for k := range psu {
-//         fmt.Printf("- %v\n", k)
-//     }
-// } else {
-//     fmt.Println("❌ powerSupplies is not map[string]interface{}")
-//     fmt.Printf("Actual type: %T\n", raw["powerSupplies"])
-// }
-
     return raw, nil
-
 }

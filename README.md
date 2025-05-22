@@ -108,6 +108,8 @@ FAIL - status incorrect: {{ $state }}
 | Check Timezone | `show clock` | Vérifie que le fuseau horaire est correctement configuré | `timezone: Europe/Paris` |
 | Check NTP Server | `show clock` | Vérifie que les serveurs NTP configurés sont bien présents | `ntp_servers: [...]` |
 | Check NTP Sync Status | `show ntp status` | Vérifie que le switch est synchronisé avec le NTP | `expected_status: synchronised` |
+| Check Discard Totals | `show interfaces counters discards` | Vérifie le nombre de discard sur les interfaces | `expected: 0` |
+| Check LANZ Status | `show queue-monitor length` | Vérifie que le LANZ est activé | `expected: true` |
 
 ---
 

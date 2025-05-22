@@ -10,7 +10,8 @@ tests:
     template: "image_optimization_check.tmpl"
     vars:
       allowed_values:
-        - "Strata-4GB"
+#        - "Strata-4GB"
+#        - "Strata-8GB"
   
   - name: Check MLAG State
     command: "show mlag"
@@ -56,3 +57,16 @@ tests:
     template: "ntp_status_check.tmpl"
     vars:
       expected_status: "synchronised"
+
+  - name: Check Discard Totals
+    command: "show interfaces counters discards"
+    template: "discard_check.tmpl"
+    vars:
+      max_in_discards: 0.0
+      max_out_discards: 0.0
+
+  - name: Check LANZ Status
+    command: "show queue-monitor length"
+    template: "lanz_check.tmpl"
+    vars:
+      expected: true

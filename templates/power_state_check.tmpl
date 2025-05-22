@@ -1,3 +1,4 @@
+[{{ .host }}] Power Supply State:
 {{- $bad := list -}}
 {{- $psus := index .result "powerSupplies" -}}
 {{- range $id, $ps := $psus }}

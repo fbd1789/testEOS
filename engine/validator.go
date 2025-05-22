@@ -9,7 +9,7 @@ import (
     "github.com/Masterminds/sprig/v3"
 )
 
-func Validate(jsonData map[string]interface{}, templateFile string, vars map[string]interface{}) (bool, string, error) {
+func Validate(jsonData map[string]interface{}, templateFile string, vars map[string]interface{}, host string) (bool, string, error) {
     // Fusion des fonctions : sprig + custom
     funcMap := sprig.TxtFuncMap()
     funcMap["compareVersions"] = CompareVersions
@@ -22,6 +22,7 @@ func Validate(jsonData map[string]interface{}, templateFile string, vars map[str
     data := map[string]interface{}{
         "result": jsonData,
         "vars":   vars,
+        "host": host,
     }
 
     var output bytes.Buffer

@@ -1,3 +1,4 @@
+[{{ .host }}] NTP Synchro State:
 {{- $status := index .result "status" }}
 {{- $expected := index .vars "expected_status" }}
 NTP status: {{ $status }}

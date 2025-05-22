@@ -1,5 +1,6 @@
-{{- if eq .result.state .vars.expected_state -}}
+[{{ .host }}] MLAG State:
+{{- if eq .result.state .vars.expected_state }}
 OK
-{{- else -}}
+{{- else }}
 FAIL - MLAG is {{ .result.state }}
 {{- end }}

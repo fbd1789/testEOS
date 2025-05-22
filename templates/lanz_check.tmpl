@@ -1,0 +1,9 @@
+[{{ .host }}] LANZ State:
+{{- $enabled := index .result "lanzEnabled" }}
+{{- $expected := index .vars "expected" }}
+LANZ Enabled: {{ $enabled }}
+{{- if eq $enabled $expected }}
+OK
+{{- else }}
+FAIL - Expected lanzEnabled = {{ $expected }}, got {{ $enabled }}
+{{- end }}

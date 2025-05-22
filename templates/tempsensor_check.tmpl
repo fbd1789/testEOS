@@ -1,3 +1,4 @@
+[{{ .host }}] Temperature State:
 {{- $bad := list -}}
 {{- $psus := index .result "powerSupplies" }}
 {{- range $psuId, $ps := $psus }}

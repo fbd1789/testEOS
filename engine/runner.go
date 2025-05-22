@@ -14,27 +14,26 @@ type TestResult struct {
 
 func RunTests(tests []parser.TestCase, client interface {
     Execute(string) (map[string]interface{}, error)
-}) {
+}, host string) {
     var wg sync.WaitGroup
     results := make(chan TestResult, len(tests))
 
     for _, test := range tests {
         wg.Add(1)
-        go func(t parser.TestCase) {
+        go func(t parser.TestCase, h string) {
             defer wg.Done()
             jsonResp, err := client.Execute(t.Command)
             if err != nil {
                 results <- TestResult{Name: t.Name, Success: false, Error: err.Error()}
                 return
             }
-            // fmt.Printf("DEBUG [%s] response JSON:\n%+v\n", t.Name, jsonResp) // Pour analyse du JSON venant du device
-            ok, msg, err := Validate(jsonResp, t.Template, t.Vars)
+            ok, msg, err := Validate(jsonResp, t.Template, t.Vars, h)
             if err != nil {
                 results <- TestResult{Name: t.Name, Success: false, Error: err.Error()}
             } else {
                 results <- TestResult{Name: t.Name, Success: ok, Error: msg}
             }
-        }(test)
+        }(test, host)
     }
 
     wg.Wait()

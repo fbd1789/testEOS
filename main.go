@@ -49,7 +49,7 @@ func main() {
             defer wg.Done()
             fmt.Printf("🔍 Running tests on host: %s\n", h)
             client := api.NewRealClient(h, *user, *pass)
-            engine.RunTests(tests, client)
+            engine.RunTests(tests, client, host)
         }(host)
     }
     wg.Wait()

@@ -1,0 +1,14 @@
+[{{ .host }}] Interface Discard:
+{{- $in := index .result "inDiscardsTotal" -}}
+{{- $out := index .result "outDiscardsTotal" -}}
+{{- $maxIn := index .vars "max_in_discards" -}}
+{{- $maxOut := index .vars "max_out_discards" -}}
+
+Total In Discards: {{ $in }}
+Total Out Discards: {{ $out }}
+
+{{- if and (le $in $maxIn) (le $out $maxOut) }}
+OK
+{{- else }}
+FAIL - Discards too high: in={{ $in }}/{{ $maxIn }}, out={{ $out }}/{{ $maxOut }}
+{{- end }}

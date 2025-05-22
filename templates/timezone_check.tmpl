@@ -1,3 +1,4 @@
+[{{ .host }}] Timezone Check:
 {{- $tz := index .result "timezone" }}
 {{- $expected := index .vars "timezone" }}
 Timezone: {{ $tz }}

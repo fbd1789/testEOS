@@ -1,13 +1,20 @@
-{{- $val := .result.imageOptimization -}}
-{{- $ok := false -}}
-{{- range .vars.allowed_values -}}
-  {{- if eq $val . -}}
-    {{- $ok = true -}}
-  {{- end -}}
-{{- end -}}
+[{{ .host }}] Image Optimization:
+{{- $value := index .result "imageOptimization" }}
+{{- $allowed := index .vars "allowed_values" }}
 
-{{- if $ok -}}
+{{- if or (not $allowed) (eq (len $allowed) 0) }}
+{{ $value }}
+{{- else }}
+  {{- $found := false }}
+  {{- range $allowed }}
+    {{- if eq $value . }}
+      {{- $found = true }}
+    {{- end }}
+  {{- end }}
+
+  {{- if $found }}
 OK
-{{- else -}}
-FAIL - Unexpected imageOptimization value: {{ $val }}
+  {{- else }}
+FAIL - imageOptimization is '{{ $value }}', expected one of: {{ range $i, $v := $allowed }}{{ if $i }}, {{ end }}{{ $v }}{{ end }}
+  {{- end }}
 {{- end }}
